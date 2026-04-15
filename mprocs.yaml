@@ -1,0 +1,6 @@
+procs:
+  frontend:
+    cmd: ["cmd", "/c", "npm", "run", "dev", "--prefix", "D:\\CODING\\PROJECTS\\Bhoomi\\dev\\frontend"]
+  
+  backend:
+    cmd: ["cmd", "/c", "npm", "run", "dev", "--prefix", "D:\\CODING\\PROJECTS\\Bhoomi\\dev\\backend"]

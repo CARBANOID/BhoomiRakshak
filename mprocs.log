@@ -1,0 +1,86 @@
+ERROR [lib::proc::proc] Process spawn error: WinProcess::spawn
+ERROR [lib::proc::proc] Process spawn error: WinProcess::spawn
+ERROR [lib::proc::proc] Process spawn error: WinProcess::spawn
+ERROR [lib::proc::proc] Process spawn error: WinProcess::spawn
+ERROR [lib::proc::proc] Process spawn error: WinProcess::spawn
+ERROR [lib::proc::proc] Process spawn error: WinProcess::spawn
+ERROR [lib::proc::proc] Process spawn error: WinProcess::spawn
+ERROR [lib::proc::proc] Process spawn error: WinProcess::spawn
+ERROR [lib::proc::proc] Process spawn error: WinProcess::spawn
+ERROR [lib::proc::proc] Process spawn error: WinProcess::spawn
+ERROR [lib::proc::proc] Process spawn error: WinProcess::spawn
+ERROR [lib::proc::proc] Process spawn error: WinProcess::spawn
+ERROR [lib::proc::proc] Process spawn error: WinProcess::spawn
+ERROR [lib::proc::proc] Process spawn error: WinProcess::spawn
+ERROR [lib::proc::proc] Process spawn error: WinProcess::spawn
+ERROR [lib::proc::proc] Process spawn error: WinProcess::spawn
+ERROR [lib::proc::proc] Process spawn error: WinProcess::spawn
+ERROR [lib::proc::proc] Process spawn error: WinProcess::spawn
+ERROR [lib::proc::proc] Process spawn error: WinProcess::spawn
+ERROR [lib::proc::proc] Process spawn error: WinProcess::spawn
+ERROR [lib::proc::proc] Process spawn error: WinProcess::spawn
+ERROR [lib::proc::proc] Process spawn error: WinProcess::spawn
+ERROR [lib::proc::proc] Process spawn error: WinProcess::spawn
+ERROR [lib::proc::proc] Process spawn error: WinProcess::spawn
+ERROR [lib::proc::proc] Process spawn error: WinProcess::spawn
+ERROR [lib::proc::proc] Process spawn error: WinProcess::spawn
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  l
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  l
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  l
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  l
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  l
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  l
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  l
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  l
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  l
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  l
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  l
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  l
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  l
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  l
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  l
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  l
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  l
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  l
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  l
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  l
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  l
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  l
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?9001  h
+WARN [lib::vt100::screen] CSI not implemented: ESC [ ?1004  h
