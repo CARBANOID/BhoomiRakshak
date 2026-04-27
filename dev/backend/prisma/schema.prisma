@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  // url      = env("DATABASE_URL")
 }
 
 model User{
@@ -18,14 +18,208 @@ model User{
   username   String 
   email      String       @unique
   password   String  
-  shapes     Shape[]
+  aois       Aoi[]
+  runs       MonitoringRun[]
+  alerts     Alert[]
+  schedules  MonitoringSchedule[]
+  profiles   ThresholdProfile[]
+  notificationPreference NotificationPreference?
+  notificationAudits NotificationMessageAudit[]
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @default(now()) @updatedAt
 }
 
-model Shape{
-  id        Int           @id   @default(autoincrement())
-  userId    String 
-  alais     String
-  shape     Json
-  type      String
-  user      User          @relation(fields: [userId], references: [id] , onDelete: Cascade , onUpdate: Cascade)
+model Aoi {
+  id         String               @id @default(uuid())
+  userId     String
+  name       String
+  geometry   Json
+  sourceType String?
+  metadata   Json?
+  isDeleted  Boolean              @default(false)
+  user       User                 @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  versions   AoiVersion[]
+  runs       MonitoringRun[]
+  alerts     Alert[]
+  schedules  MonitoringSchedule[]
+  createdAt  DateTime             @default(now())
+  updatedAt  DateTime             @default(now()) @updatedAt
+
+  @@index([userId, createdAt])
+  @@index([isDeleted, updatedAt])
+}
+
+model AoiVersion {
+  id         String   @id @default(uuid())
+  aoiId      String
+  version    Int
+  geometry   Json
+  sourceType String?
+  aoi        Aoi      @relation(fields: [aoiId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  createdAt  DateTime @default(now())
+
+  @@unique([aoiId, version])
+  @@index([aoiId, createdAt])
+}
+
+enum RunStatus {
+  queued
+  running
+  succeeded
+  failed
+  cancelled
+}
+
+enum AlertStatus {
+  active
+  acknowledged
+  resolved
+}
+
+model ThresholdProfile {
+  id         String          @id @default(uuid())
+  userId     String
+  name       String
+  mode       String          @default("strict")
+  config     Json
+  isDefault  Boolean         @default(false)
+  user       User            @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  runs       MonitoringRun[]
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @default(now()) @updatedAt
+
+  @@unique([userId, name])
+  @@index([userId, isDefault])
+}
+
+model MonitoringRun {
+  id                 String            @id @default(uuid())
+  userId             String
+  aoiId              String
+  status             RunStatus         @default(queued)
+  runDate            DateTime
+  baselineMode       String?
+  baselineYears      Int?
+  baselineLagYears   Int?
+  thresholdProfileId String?
+  configSnapshot     Json?
+  errorMessage       String?
+  queuedAt           DateTime          @default(now())
+  startedAt          DateTime?
+  completedAt        DateTime?
+  user               User              @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  aoi                Aoi               @relation(fields: [aoiId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  thresholdProfile   ThresholdProfile? @relation(fields: [thresholdProfileId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  threatMetrics      ThreatMetric[]
+  alerts             Alert[]
+  report             Report?
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @default(now()) @updatedAt
+
+  @@index([aoiId, status, createdAt])
+  @@index([userId, createdAt])
+}
+
+model ThreatMetric {
+  id              String        @id @default(uuid())
+  runId           String
+  threatType      String
+  rawAreaKm2      Float         @default(0)
+  filteredAreaKm2 Float         @default(0)
+  percentOfAoi    Float         @default(0)
+  triggered       Boolean       @default(false)
+  severity        String?
+  run             MonitoringRun @relation(fields: [runId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  createdAt       DateTime      @default(now())
+
+  @@index([runId, threatType])
+}
+
+model Alert {
+  id          String        @id @default(uuid())
+  userId      String
+  aoiId       String
+  runId       String?
+  threatType  String
+  severity    String
+  areaKm2     Float
+  percentOfAoi Float
+  status      AlertStatus   @default(active)
+  message     String?
+  readAt      DateTime?
+  acknowledgedAt DateTime?
+  resolvedAt  DateTime?
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  aoi         Aoi           @relation(fields: [aoiId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  run         MonitoringRun? @relation(fields: [runId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @default(now()) @updatedAt
+
+  @@index([aoiId, status, severity, createdAt])
+  @@index([userId, createdAt])
+}
+
+model Report {
+  id         String        @id @default(uuid())
+  runId      String        @unique
+  summary    Json
+  details    Json?
+  run        MonitoringRun @relation(fields: [runId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  generatedAt DateTime     @default(now())
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @default(now()) @updatedAt
+
+  @@index([generatedAt])
+}
+
+model MonitoringSchedule {
+  id             String   @id @default(uuid())
+  userId         String
+  aoiId          String
+  cadence        String
+  isActive       Boolean  @default(true)
+  nextRunAt      DateTime
+  lastRunAt      DateTime?
+  configSnapshot Json?
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  aoi            Aoi      @relation(fields: [aoiId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now()) @updatedAt
+
+  @@index([nextRunAt, isActive])
+  @@index([aoiId, isActive])
+}
+
+model NotificationPreference {
+  id           String   @id @default(uuid())
+  userId       String   @unique
+  emailEnabled Boolean  @default(true)
+  criticalOnly Boolean  @default(false)
+  digestCadence String  @default("off")
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now()) @updatedAt
+
+  @@index([digestCadence])
+}
+
+model NotificationMessageAudit {
+  id           String   @id @default(uuid())
+  userId       String
+  channel      String
+  category     String
+  target       String
+  subject      String
+  body         String
+  status       String   @default("queued")
+  errorMessage String?
+  metadata     Json?
+  attemptedAt  DateTime?
+  deliveredAt  DateTime?
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now()) @updatedAt
+
+  @@index([userId, createdAt])
+  @@index([status, createdAt])
 }

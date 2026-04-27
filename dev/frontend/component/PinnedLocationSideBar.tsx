@@ -1,14 +1,14 @@
 import { geoCoordsType } from '@/config/types';
-import { useMap } from '@vis.gl/react-google-maps';
 import { MapPin, X, Navigation, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 
 type PinnedLocationSideBarProps = {
     pinnedLocations:  { name: string; location: geoCoordsType }[];
     onLocationDelete: (index: number) => void;
+    onLocationNavigate?: (location: geoCoordsType) => void;
 };
 
-export function PinnedLocationSideBar({pinnedLocations,onLocationDelete}: PinnedLocationSideBarProps) {
+export function PinnedLocationSideBar({ pinnedLocations, onLocationDelete, onLocationNavigate }: PinnedLocationSideBarProps) {
     const [isOpen, setIsOpen] = useState(false);
     const toggleSidebar = () => setIsOpen(!isOpen);
 
@@ -17,7 +17,7 @@ export function PinnedLocationSideBar({pinnedLocations,onLocationDelete}: Pinned
             {/* Toggle Button */}
             <button
                 onClick={toggleSidebar}
-                className={`fixed left-4 top-4 z-20 bg-white rounded-xl shadow-lg p-3 hover:shadow-xl transition-all duration-300 border border-gray-200 group ${
+                className={`fixed left-4 bottom-25 z-20 bg-white rounded-xl shadow-lg p-3 hover:shadow-xl transition-all duration-300 border border-gray-200 group ${
                     isOpen ? 'translate-x-80' : ''
                 }`}
             >
@@ -67,6 +67,7 @@ export function PinnedLocationSideBar({pinnedLocations,onLocationDelete}: Pinned
                         <PinnedLocations
                             pinnedLocations={pinnedLocations}
                             onLocationDelete={onLocationDelete}
+                            onLocationNavigate={onLocationNavigate}
                         />
                     </div>
                 </div>
@@ -75,9 +76,10 @@ export function PinnedLocationSideBar({pinnedLocations,onLocationDelete}: Pinned
     );
 }
 
-function PinnedLocations({pinnedLocations, onLocationDelete} : PinnedLocationSideBarProps) {
-    const MapRef = useMap('bhoomi-map') ;
-    const onLocationClick = (center : geoCoordsType) => (MapRef) ? MapRef.setCenter(center) : null ;    
+function PinnedLocations({ pinnedLocations, onLocationDelete, onLocationNavigate }: PinnedLocationSideBarProps) {
+    const onLocationClick = (center: geoCoordsType) => {
+        onLocationNavigate?.(center);
+    };
 
     if (pinnedLocations.length === 0) {
         return (

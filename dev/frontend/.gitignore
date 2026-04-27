@@ -43,3 +43,5 @@ next-env.d.ts
 
 # config
 config/keys.ts
+
+/gmap

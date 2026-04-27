@@ -1,12 +1,12 @@
 type mapType =  'roadmap' | 'satellite' | 'hybrid' | 'terrain' ;
 type geoCoordsType = { lat: number , lng: number } ;
-export type GoogleMapShapes = google.maps.Rectangle | google.maps.Circle | google.maps.Polygon | google.maps.Polyline ;
-export type ShapeType = 'rectangle' | 'circle' | 'polygon' | 'polyline';
-export type DrawnShape = {
+export type GoogleMapAoiObjects = google.maps.Rectangle | google.maps.Circle | google.maps.Polygon | google.maps.Polyline ;
+export type AoiDrawType = 'rectangle' | 'circle' | 'polygon' | 'polyline' | 'marker';
+export type PendingAoi = {
     id: number | string;
-    type: ShapeType;
-    alais? : string ;
-    shape: google.maps.Rectangle | google.maps.Circle | google.maps.Polygon | google.maps.Polyline;
+    type: AoiDrawType;
+    name? : string ;
+    shape: GoogleMapAoiObjects | google.maps.Marker;
 }
 
 export type { mapType , geoCoordsType } ;

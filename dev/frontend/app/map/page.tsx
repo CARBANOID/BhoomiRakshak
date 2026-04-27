@@ -1,6 +1,5 @@
 'use client'
 
-import LoadingPage from '@/component/Loading'
 import { GoogleMapsAPI, MapId } from '@/config/keys'
 import { useMemo, useRef, useState } from 'react'
 import { APIProvider , Map , MapCameraChangedEvent , MapMouseEvent } from '@vis.gl/react-google-maps'
@@ -9,8 +8,9 @@ import { MapTypeSelectionBox } from '@/component/MapTypeSelectionBox'
 import { PinBox } from '@/component/PinBox'
 import { PinnedLocationSideBar } from '@/component/PinnedLocationSideBar'
 import { MapPinnedLocation } from '@/component/MapPinnedLocation'
-import { GMapShape } from '@/component/GMapShape'
-import { SearchInputBox } from '@/component/SearchInputBox'
+import { GMapAOI } from '@/component/GMapAOI'
+import { DashboardSidebar } from '@/component/DashboardSidebar'
+import { LayoutDashboard, X } from 'lucide-react'
 
 type MapStateType = {  
     center : geoCoordsType ,
@@ -28,6 +28,8 @@ export default function MapPage(){
     const [Loading,setLoading] = useState(true) ; 
     const [map,setMap] = useState<MapStateType>(DefaultMapState) ;
     const changeMapType = (mapType : mapType) => setMap({...map , mapTypeId : mapType}) ;
+    const [aoiRefreshKey, setAoiRefreshKey] = useState(0);
+    const [preferredAoiId, setPreferredAoiId] = useState<string | null>(null);
 
     const [pinActive,setPinActive] = useState<boolean>(false) ;
     const [pinnedLocations,setPinnedLocations] = useState<{ name:string,location:geoCoordsType}[]>([]); // get from Backend in future
@@ -35,8 +37,13 @@ export default function MapPage(){
     const pinnedLocationNameRef = useRef<HTMLInputElement>(null);
     const TogglePinActive = () => setPinActive(!pinActive) ;
     const DeletePin = (index : number) => setPinnedLocations(pinnedLocations.filter((pin : { name : string, location: geoCoordsType }, i) => i !== index)) ; 
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const handleAoiCreated = (aoiId: string) => {
+        setPreferredAoiId(aoiId);
+        setAoiRefreshKey((prev) => prev + 1);
+    };
 
-    
+
     return (
         <APIProvider  
             apiKey= {GoogleMapsAPI}  
@@ -44,7 +51,27 @@ export default function MapPage(){
             region='IN-UK'
             language='EN'
         > 
-            <div className='h-screen w-screen'>
+            <div className='h-screen w-screen relative'>
+                {/* Dashboard Toggle Button */}
+                <button 
+                    onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                    className="absolute top-4 right-[10%] z-30 p-2 bg-white rounded-2xl shadow-lg border border-emerald-100 text-emerald-700 hover:bg-emerald-50 transition-all active:scale-95"
+                    title="Toggle Dashboard"
+                >
+                    {isSidebarOpen ? <X size={20} /> : <LayoutDashboard size={20} />}
+                </button>
+
+                {isSidebarOpen && (
+                    <div className="absolute inset-0 z-20 bg-black/40 backdrop-blur-[2px] transition-all duration-300 animate-in fade-in" onClick={() => setIsSidebarOpen(false)}>
+                        <div 
+                            className="absolute top-4 right-[10%] animate-in slide-in-from-left-4 duration-300" 
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <DashboardSidebar />
+                        </div>
+                    </div>
+                )}
+
                 <MapTypeSelectionBox 
                     selectedMapType={map.mapTypeId} 
                     changeMapType={changeMapType} 
@@ -96,7 +123,7 @@ export default function MapPage(){
                     className='h-full w-full'
                 >
                     <MapPinnedLocation pinnedLocations={cachedPinnedLocations} />
-                    <GMapShape />
+                    <GMapAOI onAoiCreated={handleAoiCreated} />
                 </Map>
             </div>
         </APIProvider>

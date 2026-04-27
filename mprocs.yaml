@@ -1,6 +1,14 @@
 procs:
   frontend:
-    cmd: ["cmd", "/c", "npm", "run", "dev", "--prefix", "D:\\CODING\\PROJECTS\\Bhoomi\\dev\\frontend"]
+    cmd: ["cmd", "/c", "npm", "run", "dev", "--prefix", "D:\\CODING\\PROJECTS\\BhoomiRakshak\\dev\\frontend"]
   
   backend:
-    cmd: ["cmd", "/c", "npm", "run", "dev", "--prefix", "D:\\CODING\\PROJECTS\\Bhoomi\\dev\\backend"]
+    cmd: ["cmd", "/c", "npm", "run", "dev", "--prefix", "D:\\CODING\\PROJECTS\\BhoomiRakshak\\dev\\backend"]
+
+  model_backend:
+    cmd: ["cmd", "/c", "D:\\CODING\\PROJECTS\\BhoomiRakshak\\dev\\model_backend\\service\\.venv\\Scripts\\uvicorn", "main:app", "--host", "127.0.0.1", "--port", "8000", "--reload"]
+    cwd: "D:\\CODING\\PROJECTS\\BhoomiRakshak\\dev\\model_backend\\service"
+    env:
+      EE_PROJECT: "bhoomirakshak-1755412704181"
+
+  
